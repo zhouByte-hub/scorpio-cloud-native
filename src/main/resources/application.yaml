@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: scorpio-process
+server:
+  port: 8080
+
+scorpio-process:
+  types:
+    - docker
+    - k8s
+  config:
+    docker:
+      host: http://localhost:2376
+      tls-verify: true
+      auth:
+        username: admin
+        password: 123123
+        email: abc@qq.com
+        url: https://index.docker.io/v1/
+    k8s:
+      master: https://mymaster.com
+      disable-autoconfig: false
+      api-version: v1
+      trust-certificates: true
+      kube-config: ~/.kube/config
+      connection-timeout: 10000     # ?????0 ?????
+      request-timeout: 10000        # ??????????
+      retry-limit: 10               # ??????-1 ?????
+      retry-interval: 100           # ????????????????
+      auth:
+        try-service-account: true
+        try-kube-config: true
+      watch:
+        reconnect-interval: 1000    # ????????????
+        reconnect-limit: -1         # ????????-1 ?????
+
