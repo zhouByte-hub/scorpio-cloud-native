@@ -1,7 +1,6 @@
 package com.zhoubyte.scorpio_cloud_native.domain.node.entity;
 
 import com.zhoubyte.scorpio_cloud_native.domain.node.valobj.NodeStatus;
-import com.zhoubyte.scorpio_cloud_native.domain.platform.valobj.PlatformType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -21,9 +20,6 @@ public class ComputeNode {
     /** 节点名称 */
     String name;
 
-    /** 平台类型，标识节点来源（DOCKER/K8S） */
-    PlatformType platformType;
-
     /** 节点状态 */
     NodeStatus status;
 
@@ -35,13 +31,5 @@ public class ComputeNode {
 
     /** 创建时间 */
     Instant createdAt;
-
-    public boolean isDockerNode() {
-        return platformType == PlatformType.DOCKER;
-    }
-
-    public boolean isK8sNode() {
-        return platformType == PlatformType.K8S;
-    }
 
 }

@@ -3,7 +3,6 @@ package com.zhoubyte.scorpio_cloud_native.domain.network.entity;
 import com.zhoubyte.scorpio_cloud_native.domain.network.valobj.NetworkSpec;
 import com.zhoubyte.scorpio_cloud_native.domain.network.valobj.NetworkType;
 import com.zhoubyte.scorpio_cloud_native.domain.network.valobj.ServicePort;
-import com.zhoubyte.scorpio_cloud_native.domain.platform.valobj.PlatformType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -27,9 +26,6 @@ public class Network {
     /** K8s 命名空间，Docker 场景下可为空 */
     String namespace;
 
-    /** 平台类型，标识网络来源（DOCKER/K8S） */
-    PlatformType platformType;
-
     /** 网络类型：BRIDGE/HOST/OVERLAY/CLUSTER_IP/NODE_PORT/LOAD_BALANCER */
     NetworkType networkType;
 
@@ -47,13 +43,5 @@ public class Network {
 
     /** 创建时间 */
     Instant createdAt;
-
-    public boolean isDockerNetwork() {
-        return platformType == PlatformType.DOCKER;
-    }
-
-    public boolean isK8sService() {
-        return platformType == PlatformType.K8S;
-    }
 
 }

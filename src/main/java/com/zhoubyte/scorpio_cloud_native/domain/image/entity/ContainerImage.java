@@ -1,7 +1,6 @@
 package com.zhoubyte.scorpio_cloud_native.domain.image.entity;
 
 import com.zhoubyte.scorpio_cloud_native.domain.image.valobj.ImageReference;
-import com.zhoubyte.scorpio_cloud_native.domain.platform.valobj.PlatformType;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,9 +19,6 @@ public class ContainerImage {
 
     /** 镜像引用信息，包含 registry、repository、tag、digest */
     ImageReference reference;
-
-    /** 平台类型，标识镜像来源（DOCKER/K8S） */
-    PlatformType platformType;
 
     /** 镜像大小（字节） */
     long sizeBytes;

@@ -1,6 +1,5 @@
 package com.zhoubyte.scorpio_cloud_native.domain.storage.entity;
 
-import com.zhoubyte.scorpio_cloud_native.domain.platform.valobj.PlatformType;
 import com.zhoubyte.scorpio_cloud_native.domain.storage.valobj.VolumeSpec;
 import com.zhoubyte.scorpio_cloud_native.domain.storage.valobj.VolumeType;
 import lombok.Builder;
@@ -25,9 +24,6 @@ public class Volume {
     /** K8s 命名空间，Docker 场景下可为空 */
     String namespace;
 
-    /** 平台类型，标识存储卷来源（DOCKER/K8S） */
-    PlatformType platformType;
-
     /** 存储类型：LOCAL/HOST_PATH/NFS/BLOCK/CLOUD */
     VolumeType volumeType;
 
@@ -42,13 +38,5 @@ public class Volume {
 
     /** 创建时间 */
     Instant createdAt;
-
-    public boolean isDockerVolume() {
-        return platformType == PlatformType.DOCKER;
-    }
-
-    public boolean isK8sVolume() {
-        return platformType == PlatformType.K8S;
-    }
 
 }

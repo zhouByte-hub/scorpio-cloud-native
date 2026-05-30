@@ -1,6 +1,5 @@
 package com.zhoubyte.scorpio_cloud_native.domain.workload.entity;
 
-import com.zhoubyte.scorpio_cloud_native.domain.platform.valobj.PlatformType;
 import com.zhoubyte.scorpio_cloud_native.domain.workload.valobj.ContainerSpec;
 import com.zhoubyte.scorpio_cloud_native.domain.workload.valobj.WorkloadStatus;
 import com.zhoubyte.scorpio_cloud_native.domain.workload.valobj.WorkloadType;
@@ -27,9 +26,6 @@ public class Workload {
     /** K8s 命名空间，Docker 场景下可为空 */
     String namespace;
 
-    /** 平台类型，标识工作负载来源（DOCKER/K8S） */
-    PlatformType platformType;
-
     /** 工作负载类型：CONTAINER/POD/DEPLOYMENT/STATEFUL_SET/DAEMON_SET/JOB/CRON_JOB */
     WorkloadType workloadType;
 
@@ -50,14 +46,6 @@ public class Workload {
 
     /** 更新时间 */
     Instant updatedAt;
-
-    public boolean isDockerWorkload() {
-        return platformType == PlatformType.DOCKER;
-    }
-
-    public boolean isK8sWorkload() {
-        return platformType == PlatformType.K8S;
-    }
 
     public ContainerSpec getPrimaryContainer() {
         if (containers == null || containers.isEmpty()) {
