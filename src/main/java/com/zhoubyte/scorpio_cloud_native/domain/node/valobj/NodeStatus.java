@@ -13,10 +13,19 @@ import java.util.Map;
 @Builder
 public class NodeStatus {
 
+    /** 节点状态：READY/NOT_READY/UNKNOWN */
     NodeState state;
+
+    /** 状态详细信息 */
     String message;
+
+    /** 可分配资源，K8s Node Allocatable */
     ResourceQuota allocatable;
+
+    /** 总容量，K8s Node Capacity */
     ResourceQuota capacity;
+
+    /** 条件映射，如 MemoryPressure/DiskPressure/PIDPressure/Ready */
     Map<String, String> conditions;
 
     public boolean isReady() {

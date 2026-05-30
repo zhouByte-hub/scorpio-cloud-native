@@ -8,12 +8,25 @@ import lombok.Getter;
 @Getter
 public enum WorkloadType {
 
+    /** Docker Container */
     CONTAINER("container"),
+
+    /** K8s Pod */
     POD("pod"),
+
+    /** K8s Deployment */
     DEPLOYMENT("deployment"),
+
+    /** K8s StatefulSet */
     STATEFUL_SET("statefulSet"),
+
+    /** K8s DaemonSet */
     DAEMON_SET("daemonSet"),
+
+    /** K8s Job */
     JOB("job"),
+
+    /** K8s CronJob */
     CRON_JOB("cronJob");
 
     private final String value;

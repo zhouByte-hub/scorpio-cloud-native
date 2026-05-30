@@ -8,7 +8,10 @@ import lombok.Value;
 @Value
 public class ResourceQuota {
 
+    /** CPU 核数，如 0.5 表示 500m（0.5 核） */
     Double cpuCores;
+
+    /** 内存大小（MB） */
     Long memoryMB;
 
     public static ResourceQuota of(Double cpuCores, Long memoryMB) {

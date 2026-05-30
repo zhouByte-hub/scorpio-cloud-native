@@ -10,12 +10,6 @@ import java.util.Optional;
  */
 public interface VolumeRepository {
 
-    Volume save(Volume volume);
-
-    Optional<Volume> findById(String id);
-
     List<Volume> findAll();
-
-    void deleteById(String id);
 
 }

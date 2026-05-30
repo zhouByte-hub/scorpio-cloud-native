@@ -8,10 +8,19 @@ import lombok.Getter;
 @Getter
 public enum VolumeType {
 
+    /** 本地存储，Docker 默认存储类型 */
     LOCAL("local"),
+
+    /** 宿主机路径存储 */
     HOST_PATH("hostPath"),
+
+    /** NFS 网络存储 */
     NFS("nfs"),
+
+    /** 块存储 */
     BLOCK("block"),
+
+    /** 云厂商存储，如 AWS EBS、GCE PD */
     CLOUD("cloud");
 
     private final String value;

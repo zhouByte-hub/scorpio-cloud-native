@@ -15,11 +15,22 @@ import java.util.Map;
 @Builder
 public class ContainerImage {
 
+    /** 镜像唯一标识，Docker 为 Image ID，K8s 为镜像 Digest */
     String id;
+
+    /** 镜像引用信息，包含 registry、repository、tag、digest */
     ImageReference reference;
+
+    /** 平台类型，标识镜像来源（DOCKER/K8S） */
     PlatformType platformType;
+
+    /** 镜像大小（字节） */
     long sizeBytes;
+
+    /** 镜像创建时间 */
     Instant createdAt;
+
+    /** 镜像标签，键值对形式的元数据 */
     Map<String, String> labels;
 
     public String getFullName() {

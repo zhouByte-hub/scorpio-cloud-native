@@ -10,12 +10,6 @@ import java.util.Optional;
  */
 public interface NetworkRepository {
 
-    Network save(Network network);
-
-    Optional<Network> findById(String id);
-
     List<Network> findAll();
-
-    void deleteById(String id);
 
 }

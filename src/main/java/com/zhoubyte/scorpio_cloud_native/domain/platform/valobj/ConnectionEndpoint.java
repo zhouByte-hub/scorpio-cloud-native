@@ -8,9 +8,16 @@ import lombok.Value;
 @Value
 public class ConnectionEndpoint {
 
+    /** 主机地址 */
     String host;
+
+    /** 端口号 */
     int port;
+
+    /** 是否启用 TLS */
     boolean tlsEnabled;
+
+    /** 证书路径 */
     String certificatePath;
 
     public static ConnectionEndpoint of(String host, int port, boolean tlsEnabled) {

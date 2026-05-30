@@ -10,12 +10,6 @@ import java.util.Optional;
  */
 public interface ComputeNodeRepository {
 
-    ComputeNode save(ComputeNode node);
-
-    Optional<ComputeNode> findById(String id);
-
     List<ComputeNode> findAll();
-
-    void deleteById(String id);
 
 }

@@ -8,8 +8,13 @@ import lombok.Getter;
 @Getter
 public enum NodeState {
 
+    /** 节点就绪，可接收新 Pod 调度 */
     READY("ready"),
+
+    /** 节点未就绪，不可接收新 Pod */
     NOT_READY("notReady"),
+
+    /** 状态未知 */
     UNKNOWN("unknown");
 
     private final String value;

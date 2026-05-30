@@ -16,15 +16,34 @@ import java.util.Map;
 @Builder
 public class Platform {
 
+    /** 平台唯一标识 */
     String id;
+
+    /** 平台名称 */
     String name;
+
+    /** 平台类型：DOCKER/K8S */
     PlatformType platformType;
+
+    /** 连接端点信息 */
     ConnectionEndpoint endpoint;
+
+    /** 认证凭据 */
     AuthCredential credential;
+
+    /** 连接超时时间 */
     Duration connectionTimeout;
+
+    /** 请求超时时间 */
     Duration requestTimeout;
+
+    /** 重试次数上限 */
     long retryLimit;
+
+    /** 重试间隔 */
     Duration retryInterval;
+
+    /** 额外配置，如 K8s 的 kube-config 路径 */
     Map<String, String> extraConfig;
 
     public boolean isDocker() {

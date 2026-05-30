@@ -8,9 +8,16 @@ import lombok.Value;
 @Value
 public class ImageReference {
 
+    /** 镜像仓库地址，如 docker.io、registry.k8s.io */
     String registry;
+
+    /** 镜像仓库路径，如 library/nginx、kube-apiserver */
     String repository;
+
+    /** 镜像标签，如 latest、v1.0.0 */
     String tag;
+
+    /** 镜像摘要，如 sha256:xxx，用于精确标识镜像版本 */
     String digest;
 
     public static ImageReference of(String registry, String repository, String tag) {

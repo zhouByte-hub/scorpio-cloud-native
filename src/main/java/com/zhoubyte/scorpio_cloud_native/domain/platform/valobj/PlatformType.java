@@ -8,7 +8,10 @@ import lombok.Getter;
 @Getter
 public enum PlatformType {
 
+    /** Docker 平台 */
     DOCKER("docker"),
+
+    /** Kubernetes 平台 */
     K8S("k8s");
 
     private final String value;

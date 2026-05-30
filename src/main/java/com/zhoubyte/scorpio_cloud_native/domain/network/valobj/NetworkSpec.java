@@ -10,10 +10,19 @@ import lombok.Value;
 @Builder
 public class NetworkSpec {
 
+    /** 子网地址，如 172.17.0.0/16 */
     String subnet;
+
+    /** 网关地址，如 172.17.0.1 */
     String gateway;
+
+    /** 网络驱动，Docker 为 bridge/overlay/macvlan，K8s 无此概念 */
     String driver;
+
+    /** 是否为内部网络，不允许外部访问 */
     boolean internal;
+
+    /** 是否启用 IPv6 */
     boolean enableIPv6;
 
 }

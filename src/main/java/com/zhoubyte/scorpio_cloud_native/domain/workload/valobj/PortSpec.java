@@ -8,9 +8,16 @@ import lombok.Value;
 @Value
 public class PortSpec {
 
+    /** 端口名称，K8s ServicePort 必填 */
     String name;
+
+    /** 容器内部端口 */
     int containerPort;
+
+    /** 主机端口，Docker 端口映射或 K8s hostPort */
     Integer hostPort;
+
+    /** 协议：TCP/UDP */
     String protocol;
 
     public static PortSpec of(String name, int containerPort, Integer hostPort, String protocol) {
