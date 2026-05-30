@@ -12,7 +12,12 @@ import java.util.List;
 public class ScorpioInfraConfig {
 
     private List<String> types;
-    private DockerComponentConfig docker;
-    private K8sComponentConfig k8s;
+    private Config config;
+
+    @Data
+    public static class Config {
+        private DockerComponentConfig docker;
+        private K8sComponentConfig k8s;
+    }
 
 }

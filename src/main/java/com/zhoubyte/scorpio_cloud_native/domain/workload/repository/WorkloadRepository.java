@@ -10,12 +10,6 @@ import java.util.Optional;
  */
 public interface WorkloadRepository {
 
-    Workload save(Workload workload);
-
     Optional<Workload> findById(String id);
-
-    List<Workload> findAll();
-
-    void deleteById(String id);
 
 }

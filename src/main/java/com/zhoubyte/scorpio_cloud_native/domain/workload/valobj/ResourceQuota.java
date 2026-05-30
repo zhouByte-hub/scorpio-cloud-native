@@ -1,4 +1,4 @@
-package com.zhoubyte.scorpio_cloud_native.domain.shared.valobj;
+package com.zhoubyte.scorpio_cloud_native.domain.workload.valobj;
 
 import lombok.Value;
 

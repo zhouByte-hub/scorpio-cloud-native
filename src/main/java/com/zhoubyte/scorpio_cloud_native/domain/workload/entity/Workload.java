@@ -1,6 +1,6 @@
 package com.zhoubyte.scorpio_cloud_native.domain.workload.entity;
 
-import com.zhoubyte.scorpio_cloud_native.domain.shared.valobj.PlatformType;
+import com.zhoubyte.scorpio_cloud_native.domain.platform.valobj.PlatformType;
 import com.zhoubyte.scorpio_cloud_native.domain.workload.valobj.ContainerSpec;
 import com.zhoubyte.scorpio_cloud_native.domain.workload.valobj.WorkloadStatus;
 import com.zhoubyte.scorpio_cloud_native.domain.workload.valobj.WorkloadType;

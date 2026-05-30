@@ -1,7 +1,7 @@
 package com.zhoubyte.scorpio_cloud_native.domain.image.entity;
 
 import com.zhoubyte.scorpio_cloud_native.domain.image.valobj.ImageReference;
-import com.zhoubyte.scorpio_cloud_native.domain.shared.valobj.PlatformType;
+import com.zhoubyte.scorpio_cloud_native.domain.platform.valobj.PlatformType;
 import lombok.Builder;
 import lombok.Getter;
 

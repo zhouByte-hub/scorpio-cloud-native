@@ -2,7 +2,7 @@ package com.zhoubyte.scorpio_cloud_native.domain.platform.entity;
 
 import com.zhoubyte.scorpio_cloud_native.domain.platform.valobj.AuthCredential;
 import com.zhoubyte.scorpio_cloud_native.domain.platform.valobj.ConnectionEndpoint;
-import com.zhoubyte.scorpio_cloud_native.domain.shared.valobj.PlatformType;
+import com.zhoubyte.scorpio_cloud_native.domain.platform.valobj.PlatformType;
 import lombok.Builder;
 import lombok.Getter;
 

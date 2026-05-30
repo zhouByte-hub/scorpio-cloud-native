@@ -1,7 +1,7 @@
 package com.zhoubyte.scorpio_cloud_native.domain.workload.valobj;
 
 import com.zhoubyte.scorpio_cloud_native.domain.image.valobj.ImageReference;
-import com.zhoubyte.scorpio_cloud_native.domain.shared.valobj.ResourceQuota;
+import com.zhoubyte.scorpio_cloud_native.domain.workload.valobj.ResourceQuota;
 import lombok.Builder;
 import lombok.Value;
 
