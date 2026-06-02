@@ -9,10 +9,7 @@ import io.micrometer.common.util.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Component("dockerImageRepository")
 public class DockerContainerImageRepository implements ContainerImageRepository {
@@ -25,7 +22,7 @@ public class DockerContainerImageRepository implements ContainerImageRepository 
     }
 
     @Override
-    public List<ContainerImage> findAll(String imageName, String imageId, Map<String, Object> labels) {
+    public List<ContainerImage> queryImageByCondition(String imageName, String imageId, Map<String, Object> labels) {
         List<Image> exec = dockerClient.listImagesCmd().exec();
         return exec.stream()
                 .map(item -> {
@@ -35,13 +32,13 @@ public class DockerContainerImageRepository implements ContainerImageRepository 
                             .imageName(name)
                             .sizeBytes(item.getSize())
                             .labels(item.getLabels())
-                            .createdAt(Instant.ofEpochMilli(item.getCreated()));
+                            .createdAt(Instant.ofEpochSecond(item.getCreated()));
                     ImageReference imageReference = ImageReference.of(item.getRepoTags(), item.getRepoDigests());
                     builder.reference(imageReference);
                     return builder.build();
                 })
-                .filter(item -> !StringUtils.isEmpty(imageName) && item.getImageName().equals(imageName))
-                .filter(item -> !StringUtils.isEmpty(imageId) && item.getId().equals(imageId))
+                .filter(item -> StringUtils.isEmpty(imageName) || item.getImageName().contains(imageName))
+                .filter(item -> StringUtils.isEmpty(imageId) || item.getId().equals(imageId))
                 .filter(item -> {
                     if (labels == null || labels.isEmpty()) {
                         return true;
@@ -51,17 +48,17 @@ public class DockerContainerImageRepository implements ContainerImageRepository 
                         return false;
                     }
                     return labels.entrySet().stream().allMatch(entry -> {
-                            String key = entry.getKey();
-                            Object expectedValue = entry.getValue();
-                            String actualValue = imageLabels.get(key);
+                        String key = entry.getKey();
+                        Object expectedValue = entry.getValue();
+                        String actualValue = imageLabels.get(key);
 
-                            // 如果Label参数只传了 key，没有传入 value，则看镜像的 Label中是否有对应的 key
-                            if (expectedValue == null) {
-                                return imageLabels.containsKey(key);
-                            }
-                            // 匹配两个value是否一致
-                            return Objects.equals(String.valueOf(expectedValue), actualValue);
-                        });
+                        // 如果Label参数只传了 key，没有传入 value，则看镜像的 Label中是否有对应的 key
+                        if (expectedValue == null) {
+                            return imageLabels.containsKey(key);
+                        }
+                        // 匹配两个value是否一致
+                        return Objects.equals(String.valueOf(expectedValue), actualValue);
+                    });
                 })
                 .toList();
     }

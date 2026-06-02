@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 
-@Component("k8sContainerImageRepository")
+@Component("k8sImageRepository")
 public class K8sContainerImageRepository implements ContainerImageRepository {
 
     @Override
-    public List<ContainerImage> findAll(String imageName, String imageId, Map<String, Object> labels) {
+    public List<ContainerImage> queryImageByCondition(String imageName, String imageId, Map<String, Object> labels) {
         return List.of();
     }
 }
