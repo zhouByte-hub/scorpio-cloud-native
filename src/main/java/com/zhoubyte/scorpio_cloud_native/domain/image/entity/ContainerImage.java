@@ -17,6 +17,9 @@ public class ContainerImage {
     /** 镜像唯一标识，Docker 为 Image ID，K8s 为镜像 Digest */
     String id;
 
+    /** 镜像名称 */
+    String imageName;
+
     /** 镜像引用信息，包含 registry、repository、tag、digest */
     ImageReference reference;
 
@@ -29,8 +32,5 @@ public class ContainerImage {
     /** 镜像标签，键值对形式的元数据 */
     Map<String, String> labels;
 
-    public String getFullName() {
-        return reference.getFullName();
-    }
 
 }

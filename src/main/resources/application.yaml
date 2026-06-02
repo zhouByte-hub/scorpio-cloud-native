@@ -2,7 +2,9 @@ spring:
   application:
     name: scorpio-process
 server:
-  port: 8080
+  port: 9527
+  servlet:
+    context-path: /cloud-native
 
 scorpio-process:
   types:
@@ -10,7 +12,7 @@ scorpio-process:
     - k8s
   config:
     docker:
-      host: http://localhost:2376
+      host: unix:///Users/zhoujianing/.docker/run/docker.sock
       tls-verify: false
       cert-path: /home/user/.docker
 #      auth:

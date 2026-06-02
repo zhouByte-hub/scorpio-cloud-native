@@ -6,11 +6,9 @@ import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
 import com.zhoubyte.scorpio_cloud_native.infra.config.common.DockerComponentConfig;
 import com.zhoubyte.scorpio_cloud_native.infra.config.common.ScorpioInfraConfig;
-import com.zhoubyte.scorpio_cloud_native.infra.config.condition.DockerEnabledCondition;
 import com.zhoubyte.scorpio_cloud_native.infra.exception.InfrastructureException;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import javax.net.ssl.KeyManagerFactory;
@@ -23,7 +21,6 @@ import java.security.SecureRandom;
 import java.time.Duration;
 
 @Configuration
-@Conditional(DockerEnabledCondition.class)
 public class DockerClientConfig {
 
     @Bean("dockerClient")
