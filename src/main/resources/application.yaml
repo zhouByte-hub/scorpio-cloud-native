@@ -11,12 +11,29 @@ scorpio-process:
   config:
     docker:
       host: http://localhost:2376
-      tls-verify: true
-      auth:
-        username: admin
-        password: 123123
-        email: abc@qq.com
-        url: https://index.docker.io/v1/
+      tls-verify: false
+      cert-path: /home/user/.docker
+#      auth:
+#        username: admin
+#        password: 123123
+#        email: abc@qq.com
+#        url: https://index.docker.io/v1/
+      http:
+        connection-timeout: 10000
+        max-connect: 10
+        response_timeout: 4500
+#      ssl:
+#        enabled: true
+#        protocol: TLSv1.2
+#        verify-hostname: true
+#        key-store:
+#          path: /home/user/.docker/keyStore.jks
+#          password: changeit
+#          type: JKS
+#        trust-store:
+#          path: /home/user/.docker/trustStore.jks
+#          password: changeit
+#          type: JKS
     k8s:
       master: https://mymaster.com
       disable-autoconfig: false

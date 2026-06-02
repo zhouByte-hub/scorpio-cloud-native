@@ -11,5 +11,4 @@ public interface ContainerImageRepository {
 
     List<ContainerImage> findAll();
 
-
 }

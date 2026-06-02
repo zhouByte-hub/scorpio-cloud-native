@@ -1,4 +1,4 @@
-package com.zhoubyte.scorpio_cloud_native.infra.config;
+package com.zhoubyte.scorpio_cloud_native.infra.config.common;
 
 import lombok.Data;
 
