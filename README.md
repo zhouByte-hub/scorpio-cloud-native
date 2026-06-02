@@ -81,26 +81,127 @@
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    Application Layer                     │
-│              ScorpioCloudNativeApplication               │
+│                      Facade Layer                        │
+│    controller / request / response / exception handler   │
+│         ImageController / GlobalExceptionHandler         │
 ├─────────────────────────────────────────────────────────┤
-│                    Infrastructure Layer                  │
-│                         infra/config                     │
-│    ScorpioInfraConfig / DockerComponentConfig /          │
-│                   K8sComponentConfig                     │
+│                   Application Layer                      │
+│            service / support / exception                 │
+│              ImageService / PlatformEnum                 │
 ├─────────────────────────────────────────────────────────┤
 │                      Domain Layer                        │
-│  image / workload / network / storage / node / platform │
+│    image / workload / network / storage / node           │
 │         entity (聚合根) / valobj (值对象) / repository   │
+├─────────────────────────────────────────────────────────┤
+│                  Infrastructure Layer                    │
+│     infra/config / infra/docker / infra/k8s             │
+│    DockerClientConfig / DockerContainerImageRepository   │
+│              K8sContainerImageRepository                 │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ### 设计原则
 
-1. **统一建模**：Docker 和 K8s 共用一套领域对象，通过 `PlatformType` 枚举区分平台来源
+1. **统一建模**：Docker 和 K8s 共用一套领域对象，通过 `PlatformEnum` 枚举区分平台来源
 2. **DDD 分层**：领域层与基础设施层分离，领域层不依赖具体 SDK
 3. **值对象复用**：`ResourceQuota`、`PortSpec`、`VolumeSpec` 等在两个平台语义下通用
 4. **聚合根封装**：每个领域有一个聚合根，统一管理该领域的实体和值对象
+5. **异常分层**：每层定义独立异常类型（`DomainException` / `ApplicationException` / `InfrastructureException`），由全局异常处理器统一处理
+
+---
+
+## API 接口
+
+### 镜像查询
+
+**请求**：
+```
+POST /cloud-native/image/list/{platform}:query
+Content-Type: application/json
+```
+
+**路径参数**：
+
+| 参数 | 说明 |
+|---|---|
+| `platform` | 平台类型，可选值：`DOCKER`、`K8S` |
+
+**请求体**：
+```json
+{
+  "imageName": "nginx",
+  "imageId": "",
+  "labels": {}
+}
+```
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| `imageName` | String | 镜像名称（模糊匹配） |
+| `imageId` | String | 镜像 ID（精确匹配） |
+| `labels` | Map<String, Object> | 镜像标签过滤，value 为 null 时仅匹配 key 存在 |
+
+**响应体**：
+```json
+{
+  "images": [...],
+  "total": 1,
+  "platform": "DOCKER"
+}
+```
+
+---
+
+## 异常体系
+
+### 异常分层
+
+| 异常类 | 所属层 | HTTP 状态码 | 错误码 | 说明 |
+|---|---|---|---|---|
+| `DomainException` | Domain | 400 | 40003 | 领域规则违反 |
+| `ApplicationException` | Application | 500 | 50001 | 应用层操作失败 |
+| `InfrastructureException` | Infrastructure | 500 | 50002 | 基础设施操作失败 |
+| `IllegalArgumentException` | - | 400 | 40002 | 非法参数 |
+
+### 错误码枚举
+
+```java
+public enum ErrorCode {
+    SUCCESS(0, "Success"),
+    BAD_REQUEST(40000, "Bad request"),
+    VALIDATION_ERROR(40001, "Request validation failed"),
+    ILLEGAL_ARGUMENT(40002, "Invalid argument provided"),
+    DOMAIN_ERROR(40003, "Domain rule violation"),
+    NOT_FOUND(40400, "Resource not found"),
+    INTERNAL_ERROR(50000, "Internal server error"),
+    APP_ERROR(50001, "Application operation failed"),
+    INFRA_ERROR(50002, "Infrastructure operation failed"),
+    SERVICE_UNAVAILABLE(50300, "Service unavailable");
+}
+```
+
+### 错误响应格式
+
+```json
+{
+  "code": 40002,
+  "message": "Invalid argument provided",
+  "detail": "不支持的平台类型: UNKNOWN",
+  "timestamp": "2026-06-02 10:30:00",
+  "path": "/cloud-native/image/list/UNKNOWN:query"
+}
+```
+
+### 全局异常处理
+
+`GlobalExceptionHandler` 通过 `@RestControllerAdvice` 统一捕获各层异常，转换为标准 `ErrorResponse`：
+
+- `DomainException` → 400 + `DOMAIN_ERROR`
+- `ApplicationException` → 500 + `APP_ERROR`
+- `InfrastructureException` → 500 + `INFRA_ERROR`
+- `IllegalArgumentException` → 400 + `ILLEGAL_ARGUMENT`
+- `MethodArgumentNotValidException` → 400 + `VALIDATION_ERROR`
+- 其他 `Exception` → 500 + `INTERNAL_ERROR`
 
 ---
 
@@ -115,18 +216,47 @@
 | `Network` | `docker network` | Service | 网络配置 |
 | `Volume` | `docker volume` | PV / PVC | 存储卷 |
 | `ComputeNode` | Docker Host | Node | 计算节点 |
-| `Platform` | Docker daemon 连接 | K8s cluster 连接 | 平台连接配置 |
 
-### PlatformType 枚举
+### PlatformEnum 枚举
 
 ```java
-public enum PlatformType {
-    DOCKER("docker"),
-    K8S("k8s");
+@Getter
+public enum PlatformEnum {
+    DOCKER,
+    K8S,
 }
 ```
 
-**作用**：标识领域对象的来源平台，用于运行时判断和平台特定逻辑处理。
+**作用**：标识平台类型，用于 `ImageService` 中路由到对应平台的 Repository 实现。
+
+### ContainerImage 聚合根
+
+```java
+@Getter
+@Builder
+public class ContainerImage {
+    String id;              // 镜像唯一标识，Docker 为 Image ID，K8s 为镜像 Digest
+    String imageName;       // 镜像名称
+    ImageReference reference; // 镜像引用信息，包含 registry、repository、tag、digest
+    long sizeBytes;         // 镜像大小（字节）
+    Instant createdAt;      // 镜像创建时间
+    Map<String, String> labels; // 镜像标签，键值对形式的元数据
+}
+```
+
+### ImageReference 值对象
+
+```java
+public record ImageReference(String registry, String repository, String[] tag, String[] digest) {
+
+    public static ImageReference of(String registry, String repository, String[] tag);
+    public static ImageReference of(String repository, String[] tag);
+    public static ImageReference withDigest(String registry, String repository, String[] digest);
+    public static ImageReference of(String[] repoTags, String[] digest);
+}
+```
+
+**设计说明**：使用 Java 21 `record` 实现，不可变值对象。`tag` 和 `digest` 为数组，因为一个镜像可以有多个 tag 和 digest。
 
 ### Workload 聚合根
 
@@ -137,7 +267,6 @@ public class Workload {
     String id;
     String name;
     String namespace;           // K8s namespace，Docker 无此概念
-    PlatformType platformType;  // 来源平台
     WorkloadType workloadType;  // CONTAINER / POD / DEPLOYMENT 等
     List<ContainerSpec> containers;  // 容器规格列表（Pod 可包含多容器）
     WorkloadStatus status;      // 运行状态
@@ -151,7 +280,6 @@ public class Workload {
 **设计说明**：
 - `containers` 为列表，因为 K8s Pod 可包含多个容器，Docker Container 只有一个
 - `namespace` 仅 K8s 有意义，Docker 场景下可为空
-- 通过 `isDockerWorkload()` / `isK8sWorkload()` 方法判断平台来源
 
 ### ContainerSpec 值对象
 
@@ -194,7 +322,10 @@ scorpio-process:
     docker:           # Docker 配置
       host: ...
       tls-verify: ...
+      cert-path: ...
       auth: ...
+      http: ...
+      ssl: ...
     k8s:              # Kubernetes 配置
       master: ...
       kube-config: ...
@@ -228,12 +359,25 @@ public class ScorpioInfraConfig {
 
 | 配置项 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
-| `host` | String | - | Docker daemon 地址，如 `http://localhost:2376` |
+| `host` | String | - | Docker daemon 地址，如 `unix:///var/run/docker.sock` |
 | `tls-verify` | Boolean | true | 是否启用 TLS 验证 |
+| `cert-path` | String | /home/user/.docker | TLS 证书路径 |
 | `auth.username` | String | - | Registry 用户名 |
 | `auth.password` | String | - | Registry 密码 |
 | `auth.email` | String | - | Registry 邮箱 |
 | `auth.url` | String | - | Registry 地址，如 `https://index.docker.io/v1/` |
+| `http.connection-timeout` | Long | 10000 | 连接超时时间（毫秒） |
+| `http.response-timeout` | Long | 5000 | 响应超时时间（毫秒） |
+| `http.max-connect` | int | 10 | 最大连接数 |
+| `ssl.enabled` | Boolean | false | 是否启用自定义 SSL |
+| `ssl.protocol` | String | TLSv1.2 | SSL 协议版本 |
+| `ssl.verify-hostname` | Boolean | true | 是否验证主机名 |
+| `ssl.key-store.path` | String | - | KeyStore 文件路径 |
+| `ssl.key-store.password` | String | - | KeyStore 密码 |
+| `ssl.key-store.type` | String | JKS | KeyStore 类型 |
+| `ssl.trust-store.path` | String | - | TrustStore 文件路径 |
+| `ssl.trust-store.password` | String | - | TrustStore 密码 |
+| `ssl.trust-store.type` | String | JKS | TrustStore 类型 |
 
 ### Kubernetes 配置项
 
@@ -338,21 +482,19 @@ public class EnvVar {
 
 ## 仓储接口
 
-每个聚合根对应一个仓储接口，定义基本的 CRUD 操作：
+每个聚合根对应一个仓储接口，定义操作方法：
 
 ```java
-public interface WorkloadRepository {
-    Workload save(Workload workload);
-    Optional<Workload> findById(String id);
-    List<Workload> findAll();
-    void deleteById(String id);
+public interface ContainerImageRepository {
+    List<ContainerImage> queryImageByCondition(String imageName, String imageId, Map<String, Object> labels);
 }
 ```
 
 **设计说明**：
 - 仓储接口定义在领域层，不依赖具体实现
 - 实现类放在基础设施层，分别对接 docker-java 和 kubernetes-client
-- 通过 `PlatformType` 判断使用哪个实现
+- 通过 `PlatformEnum` 在 `ImageService` 中路由到对应实现
+- `ImageService` 通过构造函数注入所有 `ContainerImageRepository` 实现，按 `PlatformEnum.name()` 注册到 Map 中
 
 ---
 
@@ -360,11 +502,32 @@ public interface WorkloadRepository {
 
 ```
 src/main/java/com/zhoubyte/scorpio_cloud_native/
-├── domain/
+├── facade/                                    # 接口层
+│   ├── endpoint/
+│   │   └── ImageController.java               # 镜像查询接口
+│   ├── request/
+│   │   └── ImageRequest.java                  # 镜像查询请求
+│   ├── response/
+│   │   ├── ImageListResponse.java             # 镜像列表响应
+│   │   └── ErrorResponse.java                 # 统一错误响应
+│   ├── enums/
+│   │   └── ErrorCode.java                     # 错误码枚举
+│   └── exception/
+│       └── GlobalExceptionHandler.java         # 全局异常处理器
+│
+├── application/                               # 应用层
+│   ├── service/
+│   │   └── ImageService.java                  # 镜像查询服务
+│   ├── support/
+│   │   └── PlatformEnum.java                  # 平台枚举
+│   └── exception/
+│       └── ApplicationException.java           # 应用层异常
+│
+├── domain/                                    # 领域层
 │   ├── image/
-│   │   ├── entity/ContainerImage.java
-│   │   ├── repository/ContainerImageRepository.java
-│   │   └── valobj/ImageReference.java
+│   │   ├── entity/ContainerImage.java         # 镜像聚合根
+│   │   ├── repository/ContainerImageRepository.java  # 镜像仓储接口
+│   │   └── valobj/ImageReference.java         # 镜像引用值对象
 │   ├── workload/
 │   │   ├── entity/Workload.java
 │   │   ├── repository/WorkloadRepository.java
@@ -398,19 +561,22 @@ src/main/java/com/zhoubyte/scorpio_cloud_native/
 │   │   └── valobj/
 │   │       ├── NodeState.java
 │   │       └── NodeStatus.java
-│   ├── platform/
-│   │   ├── entity/Platform.java
-│   │   ├── repository/PlatformRepository.java
-│   │   └── valobj/
-│   │       ├── AuthCredential.java
-│   │       ├── ConnectionEndpoint.java
-│   │       └── PlatformType.java
+│   └── exception/
+│       └── DomainException.java                # 领域层异常
 │
-├── infra/
-│   └── config/
-│       ├── ScorpioInfraConfig.java
-│       ├── DockerComponentConfig.java
-│       └── K8sComponentConfig.java
+├── infra/                                     # 基础设施层
+│   ├── config/
+│   │   ├── DockerClientConfig.java            # Docker 客户端配置（含 SSL）
+│   │   └── common/
+│   │       ├── ScorpioInfraConfig.java        # 全局配置绑定
+│   │       ├── DockerComponentConfig.java     # Docker 配置项
+│   │       └── K8sComponentConfig.java        # K8s 配置项
+│   ├── docker/
+│   │   └── DockerContainerImageRepository.java # Docker 镜像仓储实现
+│   ├── k8s/
+│   │   └── K8sContainerImageRepository.java   # K8s 镜像仓储实现
+│   └── exception/
+│       └── InfrastructureException.java        # 基础设施层异常
 │
 └── ScorpioCloudNativeApplication.java
 ```
