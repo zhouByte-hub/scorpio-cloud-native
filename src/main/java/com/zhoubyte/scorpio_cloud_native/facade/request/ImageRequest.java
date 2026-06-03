@@ -9,6 +9,6 @@ public class ImageRequest {
 
     private String imageName;
     private String imageId;
-    private Map<String, Object> labels;
+    private Map<String, String> labels;
     
 }

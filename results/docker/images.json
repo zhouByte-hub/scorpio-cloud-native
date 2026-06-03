@@ -1,0 +1,111 @@
+{
+  "items": [
+    {
+      "createdAt": "2026-05-30T11:15:22Z",
+      "id": "sha256:7651d7f24aad83fe68a222f7f20eded10d325c96ebee285ca5bf8162eddcba64",
+      "imageName": "bitnami/postgresql:latest",
+      "labels": {
+        "build-date": "20260214",
+        "name": "Photon OS aarch64/5.0 Base Image",
+        "org.opencontainers.image.base.name": "docker.io/library/photon:5.0",
+        "org.opencontainers.image.created": "2026-05-30T11:10:25Z",
+        "org.opencontainers.image.description": "Application packaged by Broadcom, Inc.",
+        "org.opencontainers.image.title": "postgresql",
+        "org.opencontainers.image.vendor": "Broadcom, Inc.",
+        "org.opencontainers.image.version": "18.4.0",
+        "vendor": "VMware"
+      },
+      "reference": {
+        "registry": null,
+        "repository": null,
+        "tag": [
+          "bitnami/postgresql:latest"
+        ],
+        "digest": [
+          "bitnami/postgresql@sha256:7651d7f24aad83fe68a222f7f20eded10d325c96ebee285ca5bf8162eddcba64"
+        ]
+      },
+      "sizeBytes": 547142989
+    },
+    {
+      "createdAt": "2026-05-29T08:05:42Z",
+      "id": "sha256:d6b3087bc2302c2b49c875e1c5ad8c916fc10696ceb355be56cffd715e178d81",
+      "imageName": "nacos/nacos-server:latest",
+      "labels": {
+        "maintainer": "pader <huangmnlove@163.com>",
+        "org.opencontainers.image.created": "2026-05-29T08:02:05.295Z",
+        "org.opencontainers.image.description": "This project contains a Docker image meant to facilitate the deployment of Nacos .",
+        "org.opencontainers.image.licenses": "Apache-2.0",
+        "org.opencontainers.image.revision": "cc8cf73795128b8f096c13d21abf29868dfe4b55",
+        "org.opencontainers.image.source": "https://github.com/nacos-group/nacos-docker",
+        "org.opencontainers.image.title": "nacos-docker",
+        "org.opencontainers.image.url": "https://github.com/nacos-group/nacos-docker",
+        "org.opencontainers.image.version": "v3.2.2"
+      },
+      "reference": {
+        "registry": null,
+        "repository": null,
+        "tag": [
+          "nacos/nacos-server:latest"
+        ],
+        "digest": [
+          "nacos/nacos-server@sha256:d6b3087bc2302c2b49c875e1c5ad8c916fc10696ceb355be56cffd715e178d81"
+        ]
+      },
+      "sizeBytes": 1965428363
+    },
+    {
+      "createdAt": "2026-05-26T20:08:24Z",
+      "id": "sha256:aa049e689e141a4358ad1d4562dc49c88a89fbab711fd8fcc33f684c80b26301",
+      "imageName": "redis:latest",
+      "labels": {},
+      "reference": {
+        "registry": null,
+        "repository": null,
+        "tag": [
+          "redis:latest"
+        ],
+        "digest": [
+          "redis@sha256:aa049e689e141a4358ad1d4562dc49c88a89fbab711fd8fcc33f684c80b26301"
+        ]
+      },
+      "sizeBytes": 229002388
+    },
+    {
+      "createdAt": "2026-04-20T18:15:33Z",
+      "id": "sha256:7cda86a33344160309fdb65146332e4da65db81a945614f2fe32e210803f6fd1",
+      "imageName": "ghcr.io/kafbat/kafka-ui:latest",
+      "labels": {},
+      "reference": {
+        "registry": null,
+        "repository": null,
+        "tag": [
+          "ghcr.io/kafbat/kafka-ui:latest"
+        ],
+        "digest": [
+          "ghcr.io/kafbat/kafka-ui@sha256:7cda86a33344160309fdb65146332e4da65db81a945614f2fe32e210803f6fd1"
+        ]
+      },
+      "sizeBytes": 637425775
+    },
+    {
+      "createdAt": "2020-04-30T19:49:47Z",
+      "id": "sha256:9c2d321d367c582fc103ad36b7326a0edd5b558e0c987d0bea3b58bac008b20f",
+      "imageName": "redis:6.0.0",
+      "labels": {},
+      "reference": {
+        "registry": null,
+        "repository": null,
+        "tag": [
+          "redis:6.0.0"
+        ],
+        "digest": [
+          "redis@sha256:9c2d321d367c582fc103ad36b7326a0edd5b558e0c987d0bea3b58bac008b20f"
+        ]
+      },
+      "sizeBytes": 145276902
+    }
+  ],
+  "platform": "DOCKER",
+  "total": 5
+}

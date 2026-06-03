@@ -10,6 +10,6 @@ import java.util.Map;
  */
 public interface ContainerImageRepository {
 
-    List<ContainerImage> queryImageByCondition(String imageName, String imageId, Map<String, Object> labels);
+    List<ContainerImage> queryImageByCondition(String imageName, String imageId, Map<String, String> labels);
 
 }

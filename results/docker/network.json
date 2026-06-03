@@ -1,0 +1,136 @@
+{
+  "networks": [
+    {
+      "createdAt": "2025-06-06T10:43:20.918Z",
+      "id": "47552fed24ccb1c24235138c79d07964f720097467ba758f474fb15696b996bd",
+      "labels": {
+        "com.docker.compose.config-hash": "15dcad421ebb3df3e2e53dc0cb00938a0f4cbeafec99e5c95e4143e67cb2ce91",
+        "com.docker.compose.network": "default",
+        "com.docker.compose.project": "build",
+        "com.docker.compose.version": "2.34.0"
+      },
+      "name": "build_default",
+      "namespace": null,
+      "networkType": "BRIDGE",
+      "ports": null,
+      "selectors": null,
+      "spec": {
+        "subnets": [
+          {
+            "subnet": "172.19.0.0/16",
+            "gateway": "172.19.0.1",
+            "ipRange": null
+          }
+        ],
+        "driver": "bridge",
+        "internal": false,
+        "enableIPv6": false
+      }
+    },
+    {
+      "createdAt": "2025-06-05T06:14:04.410Z",
+      "id": "5b5d756cdc2ee69d8423d8d4b440d4190654ae952b2cc580dcc8c37eca043451",
+      "labels": {
+        "com.docker.compose.config-hash": "7360af61b15dc2dd8d514b7136986bd4080d93d8dd383a8578aac52ae14cf63a",
+        "com.docker.compose.network": "default",
+        "com.docker.compose.project": "redpanda",
+        "com.docker.compose.version": "2.34.0"
+      },
+      "name": "redpanda_default",
+      "namespace": null,
+      "networkType": "BRIDGE",
+      "ports": null,
+      "selectors": null,
+      "spec": {
+        "subnets": [
+          {
+            "subnet": "172.18.0.0/16",
+            "gateway": "172.18.0.1",
+            "ipRange": null
+          }
+        ],
+        "driver": "bridge",
+        "internal": false,
+        "enableIPv6": false
+      }
+    },
+    {
+      "createdAt": "2025-05-09T01:45:07.314Z",
+      "id": "6b487408d26b07dc83a7d270544a9af674fad723d16a96cecb338f61a0404f9a",
+      "labels": {},
+      "name": "host",
+      "namespace": null,
+      "networkType": "HOST",
+      "ports": null,
+      "selectors": null,
+      "spec": {
+        "subnets": [],
+        "driver": "host",
+        "internal": false,
+        "enableIPv6": false
+      }
+    },
+    {
+      "createdAt": "2026-06-03T03:44:54.896Z",
+      "id": "a9de671365572a87b32cd24b0a42128114acda31aa35ebf3ec1f9795a221dc41",
+      "labels": {},
+      "name": "bridge",
+      "namespace": null,
+      "networkType": "BRIDGE",
+      "ports": null,
+      "selectors": null,
+      "spec": {
+        "subnets": [
+          {
+            "subnet": "172.17.0.0/16",
+            "gateway": "172.17.0.1",
+            "ipRange": null
+          }
+        ],
+        "driver": "bridge",
+        "internal": false,
+        "enableIPv6": false
+      }
+    },
+    {
+      "createdAt": "2026-06-01T06:29:29.435Z",
+      "id": "a5031c3c15fa67cc42bbf81161b6d3e496dae21f19910f95c978fd90025a887a",
+      "labels": {},
+      "name": "postgresql-network",
+      "namespace": null,
+      "networkType": "BRIDGE",
+      "ports": null,
+      "selectors": null,
+      "spec": {
+        "subnets": [
+          {
+            "subnet": "172.20.0.0/16",
+            "gateway": "172.20.0.1",
+            "ipRange": null
+          }
+        ],
+        "driver": "bridge",
+        "internal": false,
+        "enableIPv6": false
+      }
+    },
+    {
+      "createdAt": "2025-05-09T01:45:07.312Z",
+      "id": "ceb68b5be098cf6530fafa5160b99355f474cfd1441d8d1ceca5eeffb706011d",
+      "labels": {},
+      "name": "none",
+      "namespace": null,
+      "networkType": null,
+      "ports": null,
+      "selectors": null,
+      "spec": {
+        "subnets": [],
+        "driver": "null",
+        "internal": false,
+        "enableIPv6": false
+      }
+    }
+  ],
+  "platform": "DOCKER",
+  "total": 6
+}

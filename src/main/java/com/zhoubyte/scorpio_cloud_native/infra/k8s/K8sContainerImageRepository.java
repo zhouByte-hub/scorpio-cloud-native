@@ -11,7 +11,7 @@ import java.util.Map;
 public class K8sContainerImageRepository implements ContainerImageRepository {
 
     @Override
-    public List<ContainerImage> queryImageByCondition(String imageName, String imageId, Map<String, Object> labels) {
+    public List<ContainerImage> queryImageByCondition(String imageName, String imageId, Map<String, String> labels) {
         return List.of();
     }
 }

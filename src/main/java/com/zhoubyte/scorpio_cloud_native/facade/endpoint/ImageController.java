@@ -3,7 +3,7 @@ package com.zhoubyte.scorpio_cloud_native.facade.endpoint;
 import com.zhoubyte.scorpio_cloud_native.application.service.ImageService;
 import com.zhoubyte.scorpio_cloud_native.domain.image.entity.ContainerImage;
 import com.zhoubyte.scorpio_cloud_native.facade.request.ImageRequest;
-import com.zhoubyte.scorpio_cloud_native.facade.response.ImageListResponse;
+import com.zhoubyte.scorpio_cloud_native.facade.response.ListResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,9 +19,9 @@ public class ImageController {
     }
 
     @PostMapping(value = "/list/{platform}:query")
-    public ImageListResponse imageList(@RequestBody ImageRequest imageRequest, @PathVariable("platform") String platform) {
+    public ListResponse<ContainerImage> imageList(@RequestBody ImageRequest imageRequest, @PathVariable("platform") String platform) {
         List<ContainerImage> containerImages = imageService.queryContainerImage(imageRequest, platform);
-        return ImageListResponse.of(containerImages, platform);
+        return ListResponse.of(containerImages, platform);
     }
 
 

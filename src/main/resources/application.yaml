@@ -12,9 +12,9 @@ scorpio-process:
     - k8s
   config:
     docker:
-      host: unix:///Users/zhoujianing/.docker/run/docker.sock
+      host: unix://${user.home}/.docker/run/docker.sock
       tls-verify: false
-      cert-path: /home/user/.docker
+      cert-path: ${user.home}/.docker
 #      auth:
 #        username: admin
 #        password: 123123

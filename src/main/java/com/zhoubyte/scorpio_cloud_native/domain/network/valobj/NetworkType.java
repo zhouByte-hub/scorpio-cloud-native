@@ -32,4 +32,13 @@ public enum NetworkType {
         this.value = value;
     }
 
+    public static NetworkType fromValue(String value) {
+        for (NetworkType networkType : NetworkType.values()) {
+            if (networkType.value.equals(value)) {
+                return networkType;
+            }
+        }
+        return null;
+    }
+
 }

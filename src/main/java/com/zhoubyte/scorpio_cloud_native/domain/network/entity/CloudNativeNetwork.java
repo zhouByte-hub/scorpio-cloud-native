@@ -15,7 +15,7 @@ import java.util.Map;
  */
 @Getter
 @Builder
-public class Network {
+public class CloudNativeNetwork {
 
     /** 网络唯一标识，Docker 为 Network ID，K8s 为 Service UID */
     String id;
