@@ -1,0 +1,72 @@
+{
+  "items": [
+    {
+      "addresses": [
+        "::1/128",
+        "127.0.0.0/8"
+      ],
+      "containerCount": 5,
+      "id": "9a215a5a-60f7-4d57-ae62-c9745bca91df",
+      "imageCount": 5,
+      "labels": {
+        "com.docker.desktop.address": "unix:///Users/zhoujianing/Library/Containers/com.docker.docker/Data/docker-cli.sock"
+      },
+      "name": "docker-desktop",
+      "plugins": {
+        "Volume": [
+          "local"
+        ],
+        "Network": [
+          "bridge",
+          "host",
+          "ipvlan",
+          "macvlan",
+          "null",
+          "overlay"
+        ],
+        "Authorization": null,
+        "Log": [
+          "awslogs",
+          "fluentd",
+          "gcplogs",
+          "gelf",
+          "journald",
+          "json-file",
+          "local",
+          "splunk",
+          "syslog"
+        ]
+      },
+      "status": {
+        "allocatable": {
+          "cpuCores": 10.0,
+          "memoryMB": 8321712128,
+          "unlimited": false
+        },
+        "capacity": {
+          "cpuCores": 10.0,
+          "memoryMB": 8321712128,
+          "unlimited": false
+        },
+        "conditions": {
+          "cpuShares": "true",
+          "debug": "false",
+          "httpProxy": "http.docker.internal:3128",
+          "httpsProxy": "http.docker.internal:3128",
+          "osType": "linux",
+          "cpuSet": "true",
+          "containersStopped": "5",
+          "containersRunning": "0",
+          "cpuCfsQuota": "true",
+          "cpuCfsPeriod": "true"
+        },
+        "message": "architecture：aarch64，dockerRootDir：/var/lib/docker",
+        "ready": false,
+        "state": "UNKNOWN"
+      },
+      "version": "29.5.2"
+    }
+  ],
+  "platform": "DOCKER",
+  "total": 1
+}

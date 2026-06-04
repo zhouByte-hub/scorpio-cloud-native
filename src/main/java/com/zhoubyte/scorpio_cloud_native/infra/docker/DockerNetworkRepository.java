@@ -8,14 +8,14 @@ import com.zhoubyte.scorpio_cloud_native.domain.network.repository.NetworkReposi
 import com.zhoubyte.scorpio_cloud_native.domain.network.valobj.NetworkSpec;
 import com.zhoubyte.scorpio_cloud_native.domain.network.valobj.NetworkType;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-@Component("dockerNetworkRepository")
+@Repository("dockerNetworkRepository")
 public class DockerNetworkRepository implements NetworkRepository {
 
     private final DockerClient dockerClient;

@@ -26,4 +26,11 @@ public class ResourceQuota {
         return cpuCores == null && memoryMB == null;
     }
 
+    public Double getCpuCores() {
+        if(cpuCores == null) {
+            return 0.0;
+        }
+        return cpuCores;
+    }
+
 }

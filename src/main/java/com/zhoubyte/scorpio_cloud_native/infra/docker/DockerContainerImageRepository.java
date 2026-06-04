@@ -2,17 +2,16 @@ package com.zhoubyte.scorpio_cloud_native.infra.docker;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.ListImagesCmd;
-import com.github.dockerjava.api.model.Image;
 import com.zhoubyte.scorpio_cloud_native.domain.image.entity.ContainerImage;
 import com.zhoubyte.scorpio_cloud_native.domain.image.repository.ContainerImageRepository;
 import com.zhoubyte.scorpio_cloud_native.domain.image.valobj.ImageReference;
 import io.micrometer.common.util.StringUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
 import java.util.*;
 
-@Component("dockerImageRepository")
+@Repository("dockerImageRepository")
 public class DockerContainerImageRepository implements ContainerImageRepository {
 
     private final DockerClient dockerClient;
@@ -25,7 +24,7 @@ public class DockerContainerImageRepository implements ContainerImageRepository 
     @Override
     public List<ContainerImage> queryImageByCondition(String imageName, String imageId, Map<String, String> labels) {
         ListImagesCmd listImagesCmd = dockerClient.listImagesCmd();
-        if(labels != null && !labels.isEmpty()) {
+        if (labels != null && !labels.isEmpty()) {
             listImagesCmd.withLabelFilter(labels);
         }
         return listImagesCmd.exec().stream()

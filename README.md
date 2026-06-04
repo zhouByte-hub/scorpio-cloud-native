@@ -139,25 +139,22 @@ Content-Type: application/json
 |---|---|---|
 | `imageName` | String | 镜像名称（模糊匹配） |
 | `imageId` | String | 镜像 ID（精确匹配） |
-| `labels` | Map<String, String> | 镜像标签过滤 |
+| `labels` | Map<String, Object> | 镜像标签过滤，value 为 null 时仅匹配 key 存在 |
 
 **响应体**：
 ```json
 {
-  "items": [...],
+  "images": [...],
   "total": 1,
   "platform": "DOCKER"
 }
 ```
 
----
-
-### 网络查询
+### 计算节点查询
 
 **请求**：
 ```
-POST /cloud-native/network/list/{platform}:query
-Content-Type: application/json
+GET /cloud-native/node/list/{platform}:query
 ```
 
 **路径参数**：
@@ -166,251 +163,51 @@ Content-Type: application/json
 |---|---|
 | `platform` | 平台类型，可选值：`DOCKER`、`K8S` |
 
-**请求体**：
-```json
-{
-  "name": "bridge",
-  "networkType": "BRIDGE",
-  "labels": {}
-}
-```
-
-| 字段 | 类型 | 说明 |
-|---|---|---|
-| `name` | String | 网络名称 |
-| `networkType` | String | 网络类型：BRIDGE / HOST / OVERLAY / CLUSTER_IP / NODE_PORT / LOAD_BALANCER |
-| `labels` | Map<String, String> | 网络标签过滤 |
-
 **响应体**：
 ```json
 {
-  "items": [...],
-  "total": 6,
+  "items": [
+    {
+      "id": "9a215a5a-60f7-4d57-ae62-c9745bca91df",
+      "name": "docker-desktop",
+      "status": {
+        "state": "READY",
+        "message": "Docker Engine running",
+        "capacity": {
+          "cpuCores": 10.0,
+          "memoryMB": 7937
+        },
+        "allocatable": {
+          "cpuCores": 10.0,
+          "memoryMB": 7937
+        },
+        "conditions": {
+          "osType": "linux",
+          "architecture": "aarch64",
+          "kernelVersion": "6.12.76-linuxkit",
+          "serverVersion": "29.5.2",
+          "cGroupVersion": "2",
+          "driver": "overlayfs"
+        }
+      },
+      "labels": [
+        "com.docker.desktop.address=unix:///Users/zhoujianing/Library/Containers/com.docker.docker/Data/docker-cli.sock"
+      ],
+      "addresses": {
+        "hostname": "docker-desktop",
+        "dockerSocket": "unix:///Users/zhoujianing/Library/Containers/com.docker.docker/Data/docker-cli.sock"
+      },
+      "createdAt": "2026-06-03T06:55:57.867359625Z"
+    }
+  ],
+  "total": 1,
   "platform": "DOCKER"
 }
 ```
 
----
-
-## 运行结果示例
-
-### Docker 镜像查询结果
-
-> 文件路径：`results/docker/images.json`
-
-```json
-{
-  "items": [
-    {
-      "createdAt": "2026-05-30T11:15:22Z",
-      "id": "sha256:7651d7f24aad83fe68a222f7f20eded10d325c96ebee285ca5bf8162eddcba64",
-      "imageName": "bitnami/postgresql:latest",
-      "labels": {
-        "build-date": "20260214",
-        "name": "Photon OS aarch64/5.0 Base Image",
-        "org.opencontainers.image.base.name": "docker.io/library/photon:5.0",
-        "org.opencontainers.image.created": "2026-05-30T11:10:25Z",
-        "org.opencontainers.image.description": "Application packaged by Broadcom, Inc.",
-        "org.opencontainers.image.title": "postgresql",
-        "org.opencontainers.image.vendor": "Broadcom, Inc.",
-        "org.opencontainers.image.version": "18.4.0",
-        "vendor": "VMware"
-      },
-      "reference": {
-        "registry": null,
-        "repository": null,
-        "tag": ["bitnami/postgresql:latest"],
-        "digest": ["bitnami/postgresql@sha256:7651d7f24aad83fe68a222f7f20eded10d325c96ebee285ca5bf8162eddcba64"]
-      },
-      "sizeBytes": 547142989
-    },
-    {
-      "createdAt": "2026-05-29T08:05:42Z",
-      "id": "sha256:d6b3087bc2302c2b49c875e1c5ad8c916fc10696ceb355be56cffd715e178d81",
-      "imageName": "nacos/nacos-server:latest",
-      "labels": {
-        "maintainer": "pader <huangmnlove@163.com>",
-        "org.opencontainers.image.created": "2026-05-29T08:02:05.295Z",
-        "org.opencontainers.image.description": "This project contains a Docker image meant to facilitate the deployment of Nacos .",
-        "org.opencontainers.image.licenses": "Apache-2.0",
-        "org.opencontainers.image.revision": "cc8cf73795128b8f096c13d21abf29868dfe4b55",
-        "org.opencontainers.image.source": "https://github.com/nacos-group/nacos-docker",
-        "org.opencontainers.image.title": "nacos-docker",
-        "org.opencontainers.image.url": "https://github.com/nacos-group/nacos-docker",
-        "org.opencontainers.image.version": "v3.2.2"
-      },
-      "reference": {
-        "tag": ["nacos/nacos-server:latest"],
-        "digest": ["nacos/nacos-server@sha256:d6b3087bc2302c2b49c875e1c5ad8c916fc10696ceb355be56cffd715e178d81"]
-      },
-      "sizeBytes": 1965428363
-    },
-    {
-      "createdAt": "2026-05-26T20:08:24Z",
-      "id": "sha256:aa049e689e141a4358ad1d4562dc49c88a89fbab711fd8fcc33f684c80b26301",
-      "imageName": "redis:latest",
-      "labels": {},
-      "reference": {
-        "tag": ["redis:latest"],
-        "digest": ["redis@sha256:aa049e689e141a4358ad1d4562dc49c88a89fbab711fd8fcc33f684c80b26301"]
-      },
-      "sizeBytes": 229002388
-    },
-    {
-      "createdAt": "2026-04-20T18:15:33Z",
-      "id": "sha256:7cda86a33344160309fdb65146332e4da65db81a945614f2fe32e210803f6fd1",
-      "imageName": "ghcr.io/kafbat/kafka-ui:latest",
-      "labels": {},
-      "reference": {
-        "tag": ["ghcr.io/kafbat/kafka-ui:latest"],
-        "digest": ["ghcr.io/kafbat/kafka-ui@sha256:7cda86a33344160309fdb65146332e4da65db81a945614f2fe32e210803f6fd1"]
-      },
-      "sizeBytes": 637425775
-    },
-    {
-      "createdAt": "2020-04-30T19:49:47Z",
-      "id": "sha256:9c2d321d367c582fc103ad36b7326a0edd5b558e0c987d0bea3b58bac008b20f",
-      "imageName": "redis:6.0.0",
-      "labels": {},
-      "reference": {
-        "tag": ["redis:6.0.0"],
-        "digest": ["redis@sha256:9c2d321d367c582fc103ad36b7326a0edd5b558e0c987d0bea3b58bac008b20f"]
-      },
-      "sizeBytes": 145276902
-    }
-  ],
-  "platform": "DOCKER",
-  "total": 5
-}
-```
-
----
-
-### Docker 网络查询结果
-
-> 文件路径：`results/docker/network.json`
-
-```json
-{
-  "items": [
-    {
-      "createdAt": "2025-06-06T10:43:20.918Z",
-      "id": "47552fed24ccb1c24235138c79d07964f720097467ba758f474fb15696b996bd",
-      "labels": {
-        "com.docker.compose.config-hash": "15dcad421ebb3df3e2e53dc0cb00938a0f4cbeafec99e5c95e4143e67cb2ce91",
-        "com.docker.compose.network": "default",
-        "com.docker.compose.project": "build",
-        "com.docker.compose.version": "2.34.0"
-      },
-      "name": "build_default",
-      "namespace": null,
-      "networkType": "BRIDGE",
-      "ports": null,
-      "selectors": null,
-      "spec": {
-        "subnets": [
-          {
-            "subnet": "172.19.0.0/16",
-            "gateway": "172.19.0.1",
-            "ipRange": null
-          }
-        ],
-        "driver": "bridge",
-        "internal": false,
-        "enableIPv6": false
-      }
-    },
-    {
-      "createdAt": "2025-06-05T06:14:04.410Z",
-      "id": "5b5d756cdc2ee69d8423d8d4b440d4190654ae952b2cc580dcc8c37eca043451",
-      "labels": {
-        "com.docker.compose.config-hash": "7360af61b15dc2dd8d514b7136986bd4080d93d8dd383a8578aac52ae14cf63a",
-        "com.docker.compose.network": "default",
-        "com.docker.compose.project": "redpanda",
-        "com.docker.compose.version": "2.34.0"
-      },
-      "name": "redpanda_default",
-      "namespace": null,
-      "networkType": "BRIDGE",
-      "spec": {
-        "subnets": [
-          {
-            "subnet": "172.18.0.0/16",
-            "gateway": "172.18.0.1"
-          }
-        ],
-        "driver": "bridge",
-        "internal": false,
-        "enableIPv6": false
-      }
-    },
-    {
-      "createdAt": "2025-05-09T01:45:07.314Z",
-      "id": "6b487408d26b07dc83a7d270544a9af674fad723d16a96cecb338f61a0404f9a",
-      "labels": {},
-      "name": "host",
-      "networkType": "HOST",
-      "spec": {
-        "subnets": [],
-        "driver": "host",
-        "internal": false,
-        "enableIPv6": false
-      }
-    },
-    {
-      "createdAt": "2026-06-03T03:44:54.896Z",
-      "id": "a9de671365572a87b32cd24b0a42128114acda31aa35ebf3ec1f9795a221dc41",
-      "labels": {},
-      "name": "bridge",
-      "networkType": "BRIDGE",
-      "spec": {
-        "subnets": [
-          {
-            "subnet": "172.17.0.0/16",
-            "gateway": "172.17.0.1"
-          }
-        ],
-        "driver": "bridge",
-        "internal": false,
-        "enableIPv6": false
-      }
-    },
-    {
-      "createdAt": "2026-06-01T06:29:29.435Z",
-      "id": "a5031c3c15fa67cc42bbf81161b6d3e496dae21f19910f95c978fd90025a887a",
-      "labels": {},
-      "name": "postgresql-network",
-      "networkType": "BRIDGE",
-      "spec": {
-        "subnets": [
-          {
-            "subnet": "172.20.0.0/16",
-            "gateway": "172.20.0.1"
-          }
-        ],
-        "driver": "bridge",
-        "internal": false,
-        "enableIPv6": false
-      }
-    },
-    {
-      "createdAt": "2025-05-09T01:45:07.312Z",
-      "id": "ceb68b5be098cf6530fafa5160b99355f474cfd1441d8d1ceca5eeffb706011d",
-      "labels": {},
-      "name": "none",
-      "networkType": null,
-      "spec": {
-        "subnets": [],
-        "driver": "null",
-        "internal": false,
-        "enableIPv6": false
-      }
-    }
-  ],
-  "platform": "DOCKER",
-  "total": 6
-}
-```
+**说明**：
+- Docker 平台返回 Docker Host 信息（单机模式）
+- K8s 平台返回集群中所有 Node 信息
 
 ---
 
@@ -438,7 +235,7 @@ public enum ErrorCode {
     INTERNAL_ERROR(50000, "Internal server error"),
     APP_ERROR(50001, "Application operation failed"),
     INFRA_ERROR(50002, "Infrastructure operation failed"),
-    SERVICE_UNAVAILABLE(50300, "Service unavailable");
+    SERVICE_UNAVAILABLE(50300, "Service unavailable")
 }
 ```
 
@@ -478,6 +275,35 @@ public enum ErrorCode {
 | `Network` | `docker network` | Service | 网络配置 |
 | `Volume` | `docker volume` | PV / PVC | 存储卷 |
 | `ComputeNode` | Docker Host | Node | 计算节点 |
+
+### ComputeNode 聚合根
+
+```java
+@Getter
+@Builder
+public class ComputeNode {
+    String id;              // 节点唯一标识，Docker 为 Host ID，K8s 为 Node UID
+    String name;            // 节点名称
+    NodeStatus status;      // 节点状态
+    Map<String, String> labels; // 标签，用于节点分类和调度选择
+    Map<String, String> addresses; // 地址映射，如 InternalIP/ExternalIP/Hostname
+    Instant createdAt;      // 创建时间
+}
+```
+
+**Docker 实现**：
+- `id` → Docker Host ID（从 `docker info` 获取）
+- `name` → Docker Host 名称（如 "docker-desktop"）
+- `status` → 固定为 `READY`，包含 CPU/内存容量信息
+- `labels` → Docker labels
+- `addresses` → hostname + Docker Socket 地址
+
+**K8s 实现**：
+- `id` → Node UID
+- `name` → Node Name
+- `status` → 从 Node Status 获取，包含 Ready/NotReady 状态
+- `labels` → Node Labels
+- `addresses` → InternalIP/ExternalIP/Hostname
 
 ### PlatformEnum 枚举
 
@@ -748,19 +574,19 @@ public class EnvVar {
 
 ```java
 public interface ContainerImageRepository {
-    List<ContainerImage> queryImageByCondition(String imageName, String imageId, Map<String, String> labels);
+    List<ContainerImage> queryImageByCondition(String imageName, String imageId, Map<String, Object> labels);
 }
 
-public interface NetworkRepository {
-    List<CloudNativeNetwork> queryNetworkByCondition(String name, String subnet, String gateway, NetworkType networkType);
+public interface ComputeNodeRepository {
+    List<ComputeNode> queryComputeNode();
 }
 ```
 
 **设计说明**：
 - 仓储接口定义在领域层，不依赖具体实现
 - 实现类放在基础设施层，分别对接 docker-java 和 kubernetes-client
-- 通过 `PlatformEnum` 在 `ImageService` 中路由到对应实现
-- `ImageService` 通过构造函数注入所有 `ContainerImageRepository` 实现，按 `PlatformEnum.name()` 注册到 Map 中
+- 通过 `PlatformEnum` 在 `ImageService` / `ComputerNodeService` 中路由到对应实现
+- Service 通过构造函数注入所有 Repository 实现，按 `PlatformEnum.name()` 注册到 Map 中
 
 ---
 
@@ -771,12 +597,12 @@ src/main/java/com/zhoubyte/scorpio_cloud_native/
 ├── facade/                                    # 接口层
 │   ├── endpoint/
 │   │   ├── ImageController.java               # 镜像查询接口
-│   │   └── CloudNativeNetworkController.java  # 网络查询接口
+│   │   └── ComputerNodeController.java        # 计算节点查询接口
 │   ├── request/
-│   │   ├── ImageRequest.java                  # 镜像查询请求
-│   │   └── NetworkRequest.java                # 网络查询请求
+│   │   └── ImageRequest.java                  # 镜像查询请求
 │   ├── response/
-│   │   ├── ListResponse.java                  # 通用列表响应（泛型）
+│   │   ├── ImageListResponse.java             # 镜像列表响应
+│   │   ├── ListResponse.java                  # 通用列表响应
 │   │   └── ErrorResponse.java                 # 统一错误响应
 │   ├── enums/
 │   │   └── ErrorCode.java                     # 错误码枚举
@@ -786,7 +612,7 @@ src/main/java/com/zhoubyte/scorpio_cloud_native/
 ├── application/                               # 应用层
 │   ├── service/
 │   │   ├── ImageService.java                  # 镜像查询服务
-│   │   └── NetworkService.java                # 网络查询服务
+│   │   └── ComputerNodeService.java           # 计算节点查询服务
 │   ├── support/
 │   │   └── PlatformEnum.java                  # 平台枚举
 │   └── exception/
@@ -811,8 +637,8 @@ src/main/java/com/zhoubyte/scorpio_cloud_native/
 │   │       ├── WorkloadStatus.java
 │   │       └── WorkloadType.java
 │   ├── network/
-│   │   ├── entity/CloudNativeNetwork.java     # 网络聚合根
-│   │   ├── repository/NetworkRepository.java  # 网络仓储接口
+│   │   ├── entity/Network.java
+│   │   ├── repository/NetworkRepository.java
 │   │   └── valobj/
 │   │       ├── NetworkSpec.java
 │   │       ├── NetworkType.java
@@ -825,11 +651,11 @@ src/main/java/com/zhoubyte/scorpio_cloud_native/
 │   │       ├── VolumeSpec.java
 │   │       └── VolumeType.java
 │   ├── node/
-│   │   ├── entity/ComputeNode.java
-│   │   ├── repository/ComputeNodeRepository.java
+│   │   ├── entity/ComputeNode.java            # 计算节点聚合根
+│   │   ├── repository/ComputeNodeRepository.java  # 计算节点仓储接口
 │   │   └── valobj/
-│   │       ├── NodeState.java
-│   │       └── NodeStatus.java
+│   │       ├── NodeState.java                 # 节点状态枚举
+│   │       └── NodeStatus.java                # 节点状态值对象
 │   └── exception/
 │       └── DomainException.java                # 领域层异常
 │
@@ -842,9 +668,11 @@ src/main/java/com/zhoubyte/scorpio_cloud_native/
 │   │       └── K8sComponentConfig.java        # K8s 配置项
 │   ├── docker/
 │   │   ├── DockerContainerImageRepository.java # Docker 镜像仓储实现
-│   │   └── DockerNetworkRepository.java       # Docker 网络仓储实现
+│   │   └── DockerComputerNodeRepository.java   # Docker 计算节点仓储实现
 │   ├── k8s/
 │   │   ├── K8sContainerImageRepository.java   # K8s 镜像仓储实现
+│   │   ├── K8sComputerNodeRepository.java     # K8s 计算节点仓储实现
+│   │   ├── K8sNetworkRepository.java          # K8s 网络仓储实现
 │   │   └── K8sNetworkRepository.java          # K8s 网络仓储实现
 │   └── exception/
 │       └── InfrastructureException.java        # 基础设施层异常

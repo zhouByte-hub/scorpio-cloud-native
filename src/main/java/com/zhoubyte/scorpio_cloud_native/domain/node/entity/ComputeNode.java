@@ -2,34 +2,42 @@ package com.zhoubyte.scorpio_cloud_native.domain.node.entity;
 
 import com.zhoubyte.scorpio_cloud_native.domain.node.valobj.NodeStatus;
 import lombok.Builder;
-import lombok.Getter;
-
-import java.time.Instant;
+import lombok.Data;
+import java.util.List;
 import java.util.Map;
 
 /**
  * 计算节点聚合根，统一承载 Docker Host 和 K8s Node
  */
-@Getter
+@Data
 @Builder
 public class ComputeNode {
 
     /** 节点唯一标识，Docker 为 Host ID，K8s 为 Node UID */
-    String id;
+    private String id;
 
     /** 节点名称 */
-    String name;
+    private String name;
+
+    /** 镜像数量 */
+    private Integer imageCount;
+
+    /** 容器 数量/Pod 数量 */
+    private Integer containerCount;
+
+    /** 版本 */
+    private String version;
 
     /** 节点状态 */
-    NodeStatus status;
+    private NodeStatus status;
 
     /** 标签，用于节点分类和调度选择 */
-    Map<String, String> labels;
+    private Map<String, String> labels;
 
     /** 地址映射，如 InternalIP/ExternalIP/Hostname */
-    Map<String, String> addresses;
+    private List<String> addresses;
 
-    /** 创建时间 */
-    Instant createdAt;
+    /** 插件信息 */
+    private Map<String, List<String>> plugins;
 
 }
