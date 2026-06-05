@@ -21,12 +21,23 @@ public enum VolumeType {
     BLOCK("block"),
 
     /** 云厂商存储，如 AWS EBS、GCE PD */
-    CLOUD("cloud");
+    CLOUD("cloud"),
+
+    UNKNOW("unknow");
 
     private final String value;
 
     VolumeType(String value) {
         this.value = value;
+    }
+
+    public static VolumeType fromValue(String value) {
+        for (VolumeType volumeType : VolumeType.values()) {
+            if (volumeType.value.equals(value)) {
+                return volumeType;
+            }
+        }
+        return VolumeType.UNKNOW;
     }
 
 }

@@ -10,6 +10,6 @@ import java.util.Optional;
  */
 public interface VolumeRepository {
 
-    List<Volume> findAll();
+    List<Volume> queryStorage(String name, String drive);
 
 }

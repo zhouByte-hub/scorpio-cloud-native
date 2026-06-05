@@ -209,6 +209,61 @@ GET /cloud-native/node/list/{platform}:query
 - Docker 平台返回 Docker Host 信息（单机模式）
 - K8s 平台返回集群中所有 Node 信息
 
+### 存储卷查询
+
+**请求**：
+```
+POST /cloud-native/volume/list/{platform}:query
+Content-Type: application/json
+```
+
+**路径参数**：
+
+| 参数 | 说明 |
+|---|---|
+| `platform` | 平台类型，可选值：`DOCKER`、`K8S` |
+
+**请求体**：
+```json
+{
+  "name": "",
+  "driver": ""
+}
+```
+
+| 字段 | 类型 | 说明 |
+|---|---|---|
+| `name` | String | 存储卷名称（精确匹配），为空时不过滤 |
+| `driver` | String | 存储驱动类型（精确匹配），为空时不过滤 |
+
+**响应体**：
+```json
+{
+  "items": [
+    {
+      "id": "my-volume",
+      "name": "my-volume",
+      "volumeType": "LOCAL",
+      "spec": {
+        "sourcePath": "/var/lib/docker/volumes/my-volume/_data",
+        "volumeType": "LOCAL"
+      },
+      "labels": {
+        "com.docker.some.label": "value"
+      }
+    }
+  ],
+  "total": 1,
+  "platform": "DOCKER"
+}
+```
+
+**说明**：
+- Docker 平台通过 `listVolumesCmd` 获取卷列表，支持按名称和驱动过滤
+- K8s 平台暂未实现，返回空列表
+- `namespace`、`status`、`createdAt` 等字段在 Docker 场景下无法获取，留空
+- `VolumeSpec` 中 `mountPath`、`accessModes`、`capacityGB`、`storageClassName`、`readOnly` 为 K8s 专属概念，Docker 场景下留空
+
 ---
 
 ## 异常体系
@@ -304,6 +359,38 @@ public class ComputeNode {
 - `status` → 从 Node Status 获取，包含 Ready/NotReady 状态
 - `labels` → Node Labels
 - `addresses` → InternalIP/ExternalIP/Hostname
+
+### Volume 聚合根
+
+```java
+@Data
+@Builder
+public class Volume {
+    String id;              // 存储卷唯一标识，Docker 为 Volume Name，K8s 为 PV/PVC UID
+    String name;            // 存储卷名称
+    String namespace;       // K8s 命名空间，Docker 场景下可为空
+    VolumeType volumeType;  // 存储类型：LOCAL/HOST_PATH/NFS/BLOCK/CLOUD
+    VolumeSpec spec;        // 存储规格配置
+    String status;          // 存储状态：Available/Bound/Released/Failed
+    Map<String, String> labels; // 标签，用于资源分类
+    Instant createdAt;      // 创建时间
+}
+```
+
+**Docker 实现**：
+- `id` / `name` → Volume Name（从 `listVolumesCmd` 获取）
+- `volumeType` → 通过 `getDriver()` 映射为 `VolumeType` 枚举
+- `spec.sourcePath` → Volume Mountpoint
+- `labels` → Volume Labels
+- `namespace`、`status`、`createdAt` → Docker API 不提供，留空
+
+**K8s 实现**（待开发）：
+- `id` → PV/PVC UID
+- `name` → PV/PVC Name
+- `namespace` → PVC Namespace
+- `volumeType` → 从 PV Spec 映射
+- `spec` → 包含 accessModes、capacityGB、storageClassName 等完整信息
+- `status` → PV/PVC 状态
 
 ### PlatformEnum 枚举
 
@@ -580,6 +667,10 @@ public interface ContainerImageRepository {
 public interface ComputeNodeRepository {
     List<ComputeNode> queryComputeNode();
 }
+
+public interface VolumeRepository {
+    List<Volume> queryStorage(String name, String drive);
+}
 ```
 
 **设计说明**：
@@ -597,9 +688,11 @@ src/main/java/com/zhoubyte/scorpio_cloud_native/
 ├── facade/                                    # 接口层
 │   ├── endpoint/
 │   │   ├── ImageController.java               # 镜像查询接口
-│   │   └── ComputerNodeController.java        # 计算节点查询接口
+│   │   ├── ComputerNodeController.java        # 计算节点查询接口
+│   │   └── VolumeController.java              # 存储卷查询接口
 │   ├── request/
-│   │   └── ImageRequest.java                  # 镜像查询请求
+│   │   ├── ImageRequest.java                  # 镜像查询请求
+│   │   └── VolumeRequest.java                 # 存储卷查询请求
 │   ├── response/
 │   │   ├── ImageListResponse.java             # 镜像列表响应
 │   │   ├── ListResponse.java                  # 通用列表响应
@@ -612,7 +705,8 @@ src/main/java/com/zhoubyte/scorpio_cloud_native/
 ├── application/                               # 应用层
 │   ├── service/
 │   │   ├── ImageService.java                  # 镜像查询服务
-│   │   └── ComputerNodeService.java           # 计算节点查询服务
+│   │   ├── ComputerNodeService.java           # 计算节点查询服务
+│   │   └── VolumeService.java                 # 存储卷查询服务
 │   ├── support/
 │   │   └── PlatformEnum.java                  # 平台枚举
 │   └── exception/
@@ -668,12 +762,13 @@ src/main/java/com/zhoubyte/scorpio_cloud_native/
 │   │       └── K8sComponentConfig.java        # K8s 配置项
 │   ├── docker/
 │   │   ├── DockerContainerImageRepository.java # Docker 镜像仓储实现
-│   │   └── DockerComputerNodeRepository.java   # Docker 计算节点仓储实现
+│   │   ├── DockerComputerNodeRepository.java   # Docker 计算节点仓储实现
+│   │   └── DockerVolumeRepository.java         # Docker 存储卷仓储实现
 │   ├── k8s/
 │   │   ├── K8sContainerImageRepository.java   # K8s 镜像仓储实现
 │   │   ├── K8sComputerNodeRepository.java     # K8s 计算节点仓储实现
 │   │   ├── K8sNetworkRepository.java          # K8s 网络仓储实现
-│   │   └── K8sNetworkRepository.java          # K8s 网络仓储实现
+│   │   └── K8sVolumeRepository.java           # K8s 存储卷仓储实现
 │   └── exception/
 │       └── InfrastructureException.java        # 基础设施层异常
 │

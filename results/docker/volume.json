@@ -1,0 +1,428 @@
+[
+  {
+    "createdAt": null,
+    "id": "33e8743cfd8ce4b67a50bc4d7a67bd2a04a599a58a36762154b18713602776a2",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "33e8743cfd8ce4b67a50bc4d7a67bd2a04a599a58a36762154b18713602776a2",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/33e8743cfd8ce4b67a50bc4d7a67bd2a04a599a58a36762154b18713602776a2/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "4b13270934bfec0849f7b19348f571a1355159f456e32549755e96ca41cee3cb",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "4b13270934bfec0849f7b19348f571a1355159f456e32549755e96ca41cee3cb",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/4b13270934bfec0849f7b19348f571a1355159f456e32549755e96ca41cee3cb/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "4cd2834ae6bcdd3e01bb0c4958dcfd402817a5268f655a5b146b4ab17d235d76",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "4cd2834ae6bcdd3e01bb0c4958dcfd402817a5268f655a5b146b4ab17d235d76",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/4cd2834ae6bcdd3e01bb0c4958dcfd402817a5268f655a5b146b4ab17d235d76/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "df169d7d5261ad7b777518e7ba91afdef564911e2999fce50a58033a593ca06b",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "df169d7d5261ad7b777518e7ba91afdef564911e2999fce50a58033a593ca06b",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/df169d7d5261ad7b777518e7ba91afdef564911e2999fce50a58033a593ca06b/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "edc5cd2345cb0ce3d2c284f3b300db8cae39b4cd24c39befc0de185fff6078de",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "edc5cd2345cb0ce3d2c284f3b300db8cae39b4cd24c39befc0de185fff6078de",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/edc5cd2345cb0ce3d2c284f3b300db8cae39b4cd24c39befc0de185fff6078de/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "f64b0b9e9427131b0e84db292c4ea0e429e99077d48904ba2e13e648c7392281",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "f64b0b9e9427131b0e84db292c4ea0e429e99077d48904ba2e13e648c7392281",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/f64b0b9e9427131b0e84db292c4ea0e429e99077d48904ba2e13e648c7392281/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "redis_data",
+    "labels": {
+      "com.docker.compose.config-hash": "04b15562ae5f26d99b55071fb32cff2d5faa7d59920bafb429629a49605d0462",
+      "com.docker.compose.project": "redis",
+      "com.docker.compose.version": "2.34.0",
+      "com.docker.compose.volume": "data"
+    },
+    "name": "redis_data",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/redis_data/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "64bacc93dc371e229d1311ab9bf39d8b30c4eab7b6b9f73ca2db1d1e1b85dab3",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "64bacc93dc371e229d1311ab9bf39d8b30c4eab7b6b9f73ca2db1d1e1b85dab3",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/64bacc93dc371e229d1311ab9bf39d8b30c4eab7b6b9f73ca2db1d1e1b85dab3/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "6f3c7d8d329448beaa3ab8460fd74320b5c06c8ab523c6e1c7bd253ad898b972",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "6f3c7d8d329448beaa3ab8460fd74320b5c06c8ab523c6e1c7bd253ad898b972",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/6f3c7d8d329448beaa3ab8460fd74320b5c06c8ab523c6e1c7bd253ad898b972/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "a0defeea5a0dab20b45378b15be3e0ef460068f1627ebdd6fc14e04006fda4d4",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "a0defeea5a0dab20b45378b15be3e0ef460068f1627ebdd6fc14e04006fda4d4",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/a0defeea5a0dab20b45378b15be3e0ef460068f1627ebdd6fc14e04006fda4d4/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "a4fb73110ef1c18748ef03e88f49f7ed54fd9b774ff564a26281ac1911d57ef0",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "a4fb73110ef1c18748ef03e88f49f7ed54fd9b774ff564a26281ac1911d57ef0",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/a4fb73110ef1c18748ef03e88f49f7ed54fd9b774ff564a26281ac1911d57ef0/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "cd5ab7bcbbdf12d142b27f90add1527fd31976dcf076328b5087164c9c0c0cbf",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "cd5ab7bcbbdf12d142b27f90add1527fd31976dcf076328b5087164c9c0c0cbf",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/cd5ab7bcbbdf12d142b27f90add1527fd31976dcf076328b5087164c9c0c0cbf/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "e32fa268e181f5b0ffe5794eedc9b6b648cc3ad9ac390a8c6179dce6885c6c90",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "e32fa268e181f5b0ffe5794eedc9b6b648cc3ad9ac390a8c6179dce6885c6c90",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/e32fa268e181f5b0ffe5794eedc9b6b648cc3ad9ac390a8c6179dce6885c6c90/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "2dd94830e41e0c22185c4a3f77773ce0c7d590c5fd1829594f712a9c5b98ced2",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "2dd94830e41e0c22185c4a3f77773ce0c7d590c5fd1829594f712a9c5b98ced2",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/2dd94830e41e0c22185c4a3f77773ce0c7d590c5fd1829594f712a9c5b98ced2/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "484df5ff8dfa7b1d42dba00b9a039615773d5d1244cc82ebd3ca60095e6c2233",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "484df5ff8dfa7b1d42dba00b9a039615773d5d1244cc82ebd3ca60095e6c2233",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/484df5ff8dfa7b1d42dba00b9a039615773d5d1244cc82ebd3ca60095e6c2233/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "8c3d59e056db06b838fc49f19f297c33ff22a528501975d234ee6c6ad9c239b3",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "8c3d59e056db06b838fc49f19f297c33ff22a528501975d234ee6c6ad9c239b3",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/8c3d59e056db06b838fc49f19f297c33ff22a528501975d234ee6c6ad9c239b3/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "da2f9b517d9e89c7fa394dafbefd35a27409ab7362083b4d7a7b479565c91cd3",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "da2f9b517d9e89c7fa394dafbefd35a27409ab7362083b4d7a7b479565c91cd3",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/da2f9b517d9e89c7fa394dafbefd35a27409ab7362083b4d7a7b479565c91cd3/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "e82d343f61c54cbe61931dd88c8c88a3c73f5f972e4f571306b70778f862388a",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "e82d343f61c54cbe61931dd88c8c88a3c73f5f972e4f571306b70778f862388a",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/e82d343f61c54cbe61931dd88c8c88a3c73f5f972e4f571306b70778f862388a/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "687fd120fb0539ac0fab22c101f25680cdeaa6b6df75e2bf6af199019555aac6",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "687fd120fb0539ac0fab22c101f25680cdeaa6b6df75e2bf6af199019555aac6",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/687fd120fb0539ac0fab22c101f25680cdeaa6b6df75e2bf6af199019555aac6/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "9c3d32ec04ff6e1f7b8daaab1a10592428bb7ccfdbc055d8e41eaff5dba3d8d3",
+    "labels": {
+      "com.docker.volume.anonymous": ""
+    },
+    "name": "9c3d32ec04ff6e1f7b8daaab1a10592428bb7ccfdbc055d8e41eaff5dba3d8d3",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/9c3d32ec04ff6e1f7b8daaab1a10592428bb7ccfdbc055d8e41eaff5dba3d8d3/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  },
+  {
+    "createdAt": null,
+    "id": "redpanda_redpanda-data",
+    "labels": {
+      "com.docker.compose.config-hash": "c7f6422b6d878573e55308ee770297a33e6bebd56262dd5cd1bdfe9f53f67b3d",
+      "com.docker.compose.project": "redpanda",
+      "com.docker.compose.version": "2.34.0",
+      "com.docker.compose.volume": "redpanda-data"
+    },
+    "name": "redpanda_redpanda-data",
+    "namespace": null,
+    "spec": {
+      "accessModes": null,
+      "capacityGB": null,
+      "mountPath": null,
+      "readOnly": false,
+      "sourcePath": "/var/lib/docker/volumes/redpanda_redpanda-data/_data",
+      "storageClassName": null,
+      "volumeType": "LOCAL"
+    },
+    "status": null,
+    "volumeType": "LOCAL"
+  }
+]
